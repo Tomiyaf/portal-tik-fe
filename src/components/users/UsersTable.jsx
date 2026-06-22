@@ -23,7 +23,7 @@ export function UsersTable({
   return (
     <div className={glass(dark, 'overflow-hidden')}>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[800px] text-left text-sm">
+        <table className="w-full min-w-200 text-left text-sm">
           <thead className={dark ? 'bg-white/3 text-slate-400' : 'bg-blue-50/50 text-blue-900/60'}>
             <tr className="text-[11px] uppercase tracking-wider">
               <th className="px-5 py-3 font-normal">Nama</th>
