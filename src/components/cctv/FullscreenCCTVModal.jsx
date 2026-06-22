@@ -15,7 +15,7 @@ export function FullscreenCCTVModal({ dark, camera, onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-4 sm:p-6"
       style={{ backdropFilter: 'blur(8px)', background: 'rgba(0,0,0,0.85)' }}
       onClick={onClose}
       role="dialog"
@@ -35,10 +35,7 @@ export function FullscreenCCTVModal({ dark, camera, onClose }) {
           }}
         >
           {canPreview ? (
-            <CCTVFeedFrame
-              title={`CCTV ${camera.camera_name}`}
-              src={feedUrl}
-            />
+            <CCTVFeedFrame title={`CCTV ${camera.camera_name}`} src={feedUrl} />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
               {feedUrl ? 'Feed Tidak Dapat Ditampilkan' : 'Feed Belum Diatur'}

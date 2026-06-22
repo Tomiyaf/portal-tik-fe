@@ -364,7 +364,7 @@ export default function DashboardPage() {
               )}
             </div>
 
-            <div className="flex items-center justify-between gap-3 px-5 py-3">
+            <div className="flex items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-5">
               <div className="flex min-w-0 items-center gap-2">
                 <Video
                   className={`h-3.5 w-3.5 shrink-0 ${
@@ -418,7 +418,7 @@ export default function DashboardPage() {
             <div className={glass(dark, 'flex flex-col p-4 sm:p-6')}>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[11px] uppercase tracking-widest opacity-60">Gerbang Utama</p>
+                  <p className="text-[11px] uppercase tracking-widest opacity-60">Kontrol Gate</p>
                 </div>
 
                 <motion.span
@@ -430,7 +430,7 @@ export default function DashboardPage() {
                 />
               </div>
 
-              <div className="mt-3 flex items-center gap-2 text-xs opacity-70">
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs opacity-70">
                 {iotDeviceStatus === 'online' ? (
                   <Wifi className="h-3.5 w-3.5 text-emerald-500" />
                 ) : (
@@ -535,7 +535,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
-          <div className={glass(dark, 'flex flex-col p-4 sm:p-6 lg:col-span-3')}>
+          <div className={glass(dark, 'flex flex-col overflow-hidden p-4 sm:p-6 lg:col-span-3')}>
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-widest opacity-60">Tren Akses</p>
@@ -543,7 +543,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-              <div className="h-56 min-h-56 min-w-[640px]">
+              <div className="h-56 min-h-56 min-w-[480px] sm:min-w-[640px]">
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <AreaChart data={chartData} margin={{ top: 0, right: 12, left: -12, bottom: 0 }}>
                     <defs>
@@ -599,7 +599,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className={glass(dark, 'p-4 sm:p-6')}>
+        <div className={glass(dark, 'overflow-hidden p-4 sm:p-6')}>
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <h3 className="tracking-tight">Aktivitas Akses Terbaru</h3>
             <button
