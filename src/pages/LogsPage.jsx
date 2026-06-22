@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Download, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Download,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
 import {
   Area,
   AreaChart,
@@ -194,7 +201,7 @@ export default function LogsPage() {
         </button>
       </div>
 
-      <div className={glass(dark, 'flex flex-col p-6')}>
+      <div className={glass(dark, 'flex flex-col overflow-hidden p-4 sm:p-6')}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[11px] uppercase tracking-widest opacity-60">Tren Akses</p>
@@ -271,7 +278,7 @@ export default function LogsPage() {
       </div>
 
       <div className={glass(dark, 'p-4')}>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col gap-3">
           <div
             className={`flex min-w-55 flex-1 items-center gap-2 rounded-xl border px-3 py-2 ${
               dark
@@ -292,132 +299,139 @@ export default function LogsPage() {
               }`}
             />
           </div>
-
-          <SelectField
-            label="Status"
-            value={status}
-            onChange={(value) => {
-              setStatus(value);
-              setPage(1);
-            }}
-            dark={dark}
-          >
-            <option value="all">Semua</option>
-            <option value="success">Berhasil</option>
-            <option value="failed">Gagal</option>
-            <option value="pending">Menunggu</option>
-          </SelectField>
-          <SelectField
-            label="Method"
-            value={method}
-            onChange={(value) => {
-              setMethod(value);
-              setPage(1);
-            }}
-            dark={dark}
-          >
-            <option value="all">Semua</option>
-            <option value="web">Web</option>
-            <option value="mobile">Mobile</option>
-          </SelectField>
-          <SelectField
-            label="Action"
-            value={action}
-            onChange={(value) => {
-              setAction(value);
-              setPage(1);
-            }}
-            dark={dark}
-          >
-            <option value="all">Semua</option>
-            <option value="open">Buka</option>
-            <option value="close">Tutup</option>
-            <option value="entry">Masuk</option>
-            <option value="exit">Keluar</option>
-          </SelectField>
-          <SelectField
-            label="Urutkan"
-            value={sortOrder}
-            onChange={(value) => {
-              setSortOrder(value);
-              setPage(1);
-            }}
-            dark={dark}
-          >
-            <option value="desc">Terbaru</option>
-            <option value="asc">Terlama</option>
-          </SelectField>
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
+            <SelectField
+              label="Status"
+              value={status}
+              onChange={(value) => {
+                setStatus(value);
+                setPage(1);
+              }}
+              dark={dark}
+            >
+              <option value="all">Semua</option>
+              <option value="success">Berhasil</option>
+              <option value="failed">Gagal</option>
+              <option value="pending">Menunggu</option>
+            </SelectField>
+            <SelectField
+              label="Method"
+              value={method}
+              onChange={(value) => {
+                setMethod(value);
+                setPage(1);
+              }}
+              dark={dark}
+            >
+              <option value="all">Semua</option>
+              <option value="web">Web</option>
+              <option value="mobile">Mobile</option>
+            </SelectField>
+            <SelectField
+              label="Action"
+              value={action}
+              onChange={(value) => {
+                setAction(value);
+                setPage(1);
+              }}
+              dark={dark}
+            >
+              <option value="all">Semua</option>
+              <option value="open">Buka</option>
+              <option value="close">Tutup</option>
+              <option value="entry">Masuk</option>
+              <option value="exit">Keluar</option>
+            </SelectField>
+            <SelectField
+              label="Urutkan"
+              value={sortOrder}
+              onChange={(value) => {
+                setSortOrder(value);
+                setPage(1);
+              }}
+              dark={dark}
+            >
+              <option value="desc">Terbaru</option>
+              <option value="asc">Terlama</option>
+            </SelectField>
+          </div>
         </div>
       </div>
 
       <div className={glass(dark, 'overflow-hidden')}>
-        <table className="w-full text-left text-sm">
-          <thead className={dark ? 'bg-white/3 text-slate-400' : 'bg-blue-50/50 text-blue-900/60'}>
-            <tr className="text-[11px] uppercase tracking-wider">
-              <th className="px-5 py-3 font-normal">Pengguna</th>
-              <th className="px-5 py-3 font-normal">Peran</th>
-              <th className="px-5 py-3 font-normal">Aksi</th>
-              <th className="px-5 py-3 font-normal">Metode</th>
-              <th className="px-5 py-3 font-normal">Status</th>
-              <th className="px-5 py-3 font-normal">Catatan</th>
-              <th className="px-5 py-3 font-normal">Waktu</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-current/10">
-            {loading ? (
-              <tr>
-                <td className="px-5 py-4 text-center opacity-70" colSpan={7}>
-                  <LoadingIndicator label="Memuat log..." className="justify-center" />
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-200 text-left text-sm">
+            <thead
+              className={dark ? 'bg-white/3 text-slate-400' : 'bg-blue-50/50 text-blue-900/60'}
+            >
+              <tr className="text-[11px] uppercase tracking-wider">
+                <th className="px-5 py-3 font-normal">Pengguna</th>
+                <th className="px-5 py-3 font-normal">Peran</th>
+                <th className="px-5 py-3 font-normal">Aksi</th>
+                <th className="px-5 py-3 font-normal">Metode</th>
+                <th className="px-5 py-3 font-normal">Status</th>
+                <th className="px-5 py-3 font-normal">Catatan</th>
+                <th className="px-5 py-3 font-normal">Waktu</th>
               </tr>
-            ) : error ? (
-              <tr>
-                <td className="px-5 py-4 text-center text-red-500/90" colSpan={7}>
-                  {error}
-                </td>
-              </tr>
-            ) : !logs.length ? (
-              <tr>
-                <td className="px-5 py-4 text-center opacity-70" colSpan={7}>
-                  Belum ada data log akses.
-                </td>
-              </tr>
-            ) : (
-              logs.map((entry) => {
-                const timestamp = entry?.created_at ? formatDate(entry.created_at) : '-';
-                const statusClass = {
-                  success: 'bg-emerald-500/15 text-emerald-500',
-                  pending: 'bg-amber-500/15 text-amber-500',
-                  failed: 'bg-red-500/15 text-red-500',
-                };
-                return (
-                  <tr key={entry.id} className="hover:bg-current/3">
-                    <td className="px-5 py-3">{entry?.user?.full_name || '-'}</td>
-                    <td className="px-5 py-3 capitalize opacity-70">{entry?.user?.role || '-'}</td>
-                    <td className="px-5 py-3 capitalize">{entry?.action || '-'}</td>
-                    <td className="px-5 py-3 capitalize opacity-70">
-                      {entry?.access_method || '-'}
-                    </td>
-                    <td className="px-5 py-3">
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs capitalize ${statusClass[entry?.access_status]}`}
-                      >
-                        {entry?.access_status || '-'}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3 opacity-70">{entry?.notes || '-'}</td>
-                    <td className="px-5 py-3 tabular-nums opacity-70">{timestamp}</td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-current/10 px-5 py-4 text-xs">
+            </thead>
+            <tbody className="divide-y divide-current/10">
+              {loading ? (
+                <tr>
+                  <td className="px-5 py-4 text-center opacity-70" colSpan={7}>
+                    <LoadingIndicator label="Memuat log..." className="justify-center" />
+                  </td>
+                </tr>
+              ) : error ? (
+                <tr>
+                  <td className="px-5 py-4 text-center text-red-500/90" colSpan={7}>
+                    {error}
+                  </td>
+                </tr>
+              ) : !logs.length ? (
+                <tr>
+                  <td className="px-5 py-4 text-center opacity-70" colSpan={7}>
+                    Belum ada data log akses.
+                  </td>
+                </tr>
+              ) : (
+                logs.map((entry) => {
+                  const timestamp = entry?.created_at ? formatDate(entry.created_at) : '-';
+                  const statusClass = {
+                    success: 'bg-emerald-500/15 text-emerald-500',
+                    pending: 'bg-amber-500/15 text-amber-500',
+                    failed: 'bg-red-500/15 text-red-500',
+                  };
+                  return (
+                    <tr key={entry.id} className="hover:bg-current/3">
+                      <td className="px-5 py-3">{entry?.user?.full_name || '-'}</td>
+                      <td className="px-5 py-3 capitalize opacity-70">
+                        {entry?.user?.role || '-'}
+                      </td>
+                      <td className="px-5 py-3 capitalize">{entry?.action || '-'}</td>
+                      <td className="px-5 py-3 capitalize opacity-70">
+                        {entry?.access_method || '-'}
+                      </td>
+                      <td className="px-5 py-3">
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-xs capitalize ${statusClass[entry?.access_status]}`}
+                        >
+                          {entry?.access_status || '-'}
+                        </span>
+                      </td>
+                      <td className="px-5 py-3 opacity-70">{entry?.notes || '-'}</td>
+                      <td className="px-5 py-3 tabular-nums opacity-70">{timestamp}</td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex flex-col gap-3 border-t border-current/10 px-3 py-4 text-xs sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-5">
           <span className="opacity-60">
             Halaman {page} dari {totalPages} · {total} data
           </span>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-2">
             <label className="flex items-center gap-2 opacity-70">
               Per Halaman
               <select
@@ -438,65 +452,67 @@ export default function LogsPage() {
                 <option value="50">50</option>
               </select>
             </label>
-            <button
-              onClick={() => setPage(1)}
-              disabled={page === 1}
-              className={`rounded-lg border px-2.5 py-1 ${
-                dark
-                  ? 'border-white/10 text-white/70 hover:bg-white/5'
-                  : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
-              } disabled:cursor-not-allowed disabled:opacity-50`}
-            >
-              Pertama
-            </button>
-            <button
-              onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-              disabled={page === 1}
-              className={`rounded-lg border px-2.5 py-1 ${
-                dark
-                  ? 'border-white/10 text-white/70 hover:bg-white/5'
-                  : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
-              } disabled:cursor-not-allowed disabled:opacity-50`}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            {pageNumbers.map((num) => (
+            <div className="flex items-center gap-1 sm:gap-1.5">
               <button
-                key={num}
-                onClick={() => setPage(num)}
-                className={`rounded-lg px-2.5 py-1 ${
-                  page === num
-                    ? 'bg-blue-600 text-white'
-                    : dark
-                      ? 'border border-white/10 text-white/70 hover:bg-white/5'
-                      : 'border border-blue-200 text-blue-800 hover:bg-blue-50/50'
-                }`}
+                onClick={() => setPage(1)}
+                disabled={page === 1}
+                className={`rounded-lg border px-2.5 py-1 ${
+                  dark
+                    ? 'border-white/10 text-white/70 hover:bg-white/5'
+                    : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
+                } disabled:cursor-not-allowed disabled:opacity-50`}
               >
-                {num}
+                <ChevronsLeft className="h-4 w-4" />
               </button>
-            ))}
-            <button
-              onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-              disabled={page === totalPages}
-              className={`rounded-lg border px-2.5 py-1 ${
-                dark
-                  ? 'border-white/10 text-white/70 hover:bg-white/5'
-                  : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
-              } disabled:cursor-not-allowed disabled:opacity-50`}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => setPage(totalPages)}
-              disabled={page === totalPages}
-              className={`rounded-lg border px-2.5 py-1 ${
-                dark
-                  ? 'border-white/10 text-white/70 hover:bg-white/5'
-                  : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
-              } disabled:cursor-not-allowed disabled:opacity-50`}
-            >
-              Terakhir
-            </button>
+              <button
+                onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                disabled={page === 1}
+                className={`rounded-lg border px-2.5 py-1 ${
+                  dark
+                    ? 'border-white/10 text-white/70 hover:bg-white/5'
+                    : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
+                } disabled:cursor-not-allowed disabled:opacity-50`}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              {pageNumbers.map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num)}
+                  className={`rounded-lg px-2.5 py-1 ${
+                    page === num
+                      ? 'bg-blue-600 text-white'
+                      : dark
+                        ? 'border border-white/10 text-white/70 hover:bg-white/5'
+                        : 'border border-blue-200 text-blue-800 hover:bg-blue-50/50'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+              <button
+                onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                disabled={page === totalPages}
+                className={`rounded-lg border px-2.5 py-1 ${
+                  dark
+                    ? 'border-white/10 text-white/70 hover:bg-white/5'
+                    : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
+                } disabled:cursor-not-allowed disabled:opacity-50`}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setPage(totalPages)}
+                disabled={page === totalPages}
+                className={`rounded-lg border px-2.5 py-1 ${
+                  dark
+                    ? 'border-white/10 text-white/70 hover:bg-white/5'
+                    : 'border-blue-200 text-blue-800 hover:bg-blue-50/50'
+                } disabled:cursor-not-allowed disabled:opacity-50`}
+              >
+                <ChevronsRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -511,7 +527,7 @@ function SelectField({ label, value, onChange, dark, children, compact = false }
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className={`rounded-xl border px-3 py-2 text-sm outline-none ${
+        className={`${compact ? '' : 'w-full sm:w-auto'} rounded-xl border px-3 py-2 text-sm outline-none ${
           dark
             ? 'border-white/10 bg-slate-900/70 text-slate-100'
             : 'border-blue-200 bg-white/80 text-blue-900'
