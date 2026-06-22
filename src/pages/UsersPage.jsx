@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { UserPlus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { UserPlus, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useUsers } from '../hooks/useUsers';
 import { UsersFilters } from '../components/users/UsersFilters';
@@ -144,11 +144,11 @@ export default function UsersPage() {
         onVerify={verifyUser}
         onDelete={(userItem) => setDeleteTarget(userItem)}
         footer={
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-current/10 px-5 py-4 text-xs">
+          <div className="flex flex-col gap-3 border-t border-current/10 px-3 py-4 text-xs sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-5">
             <span className="opacity-60">
               Halaman {currentPage} dari {totalPages} · {totalCount} pengguna
             </span>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-2">
               <label className="flex items-center gap-2 opacity-70">
                 Per Halaman
                 <select
@@ -170,49 +170,51 @@ export default function UsersPage() {
                   <option value="100">100</option>
                 </select>
               </label>
-              <button
-                onClick={() => setPage(1)}
-                disabled={currentPage === 1}
-                className={paginationButton(dark)}
-              >
-                Pertama
-              </button>
-              <button
-                onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-                disabled={currentPage === 1}
-                className={paginationButton(dark)}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              {pageNumbers.map((num) => (
+              <div className="flex items-center gap-1 sm:gap-1.5">
                 <button
-                  key={num}
-                  onClick={() => setPage(num)}
-                  className={`rounded-lg px-2.5 py-1 ${
-                    currentPage === num
-                      ? 'bg-blue-600 text-white'
-                      : dark
-                        ? 'border border-white/10 text-white/70 hover:bg-white/5'
-                        : 'border border-blue-200 text-blue-800 hover:bg-blue-50/50'
-                  }`}
+                  onClick={() => setPage(1)}
+                  disabled={currentPage === 1}
+                  className={paginationButton(dark)}
                 >
-                  {num}
+                  <ChevronsLeft className="h-4 w-4" />
                 </button>
-              ))}
-              <button
-                onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages}
-                className={paginationButton(dark)}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => setPage(totalPages)}
-                disabled={currentPage === totalPages}
-                className={paginationButton(dark)}
-              >
-                Terakhir
-              </button>
+                <button
+                  onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className={paginationButton(dark)}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                {pageNumbers.map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setPage(num)}
+                    className={`rounded-lg px-2.5 py-1 ${
+                      currentPage === num
+                        ? 'bg-blue-600 text-white'
+                        : dark
+                          ? 'border border-white/10 text-white/70 hover:bg-white/5'
+                          : 'border border-blue-200 text-blue-800 hover:bg-blue-50/50'
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                  className={paginationButton(dark)}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setPage(totalPages)}
+                  disabled={currentPage === totalPages}
+                  className={paginationButton(dark)}
+                >
+                  <ChevronsRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         }
