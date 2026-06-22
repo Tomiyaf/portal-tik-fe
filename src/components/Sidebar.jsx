@@ -1,5 +1,17 @@
+import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { LayoutDashboard, Video, Car, Users, ScrollText, PhoneCall, LogOut, X, Download } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Video,
+  Car,
+  Users,
+  User,
+  ScrollText,
+  PhoneCall,
+  LogOut,
+  X,
+  Download,
+} from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +23,7 @@ const navItems = [
   { path: '/users', label: 'Manajemen Pengguna', icon: <Users className="h-4 w-4" /> },
   { path: '/logs', label: 'Log Akses', icon: <ScrollText className="h-4 w-4" /> },
   { path: '/intercom', label: 'Intercom', icon: <PhoneCall className="h-4 w-4" /> },
+  { path: '/profile', label: 'Profil', icon: <User className="h-4 w-4" /> },
   // { path: '/settings', label: 'Settings', icon: <Settings className="h-4 w-4" /> },
 ];
 
@@ -115,6 +128,19 @@ function SidebarContent({ dark, user, onLogout, onClose, showHeader = true }) {
 }
 
 export function Sidebar({ dark, user, onLogout, isOpen, onClose }) {
+  useEffect(() => {
+    if (isOpen) {
+      const htmlOriginal = document.documentElement.style.overflow;
+      const bodyOriginal = document.body.style.overflow;
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.documentElement.style.overflow = htmlOriginal;
+        document.body.style.overflow = bodyOriginal;
+      };
+    }
+  }, [isOpen]);
+
   return (
     <>
       <aside
@@ -138,7 +164,7 @@ export function Sidebar({ dark, user, onLogout, isOpen, onClose }) {
               onClick={onClose}
             />
             <motion.aside
-              className={`fixed left-0 top-0 z-50 h-screen w-72 border-r p-4 md:hidden ${
+              className={`fixed left-0 top-0 z-50 h-dvh w-72 border-r p-4 md:hidden ${
                 dark
                   ? 'border-white/10 bg-[#040816]/90 backdrop-blur-xl'
                   : 'border-blue-200/40 bg-white/90 backdrop-blur-xl'
