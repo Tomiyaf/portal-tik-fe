@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
 import { glass } from '../../utils/glass';
@@ -5,6 +6,17 @@ import { buildCctvFeedUrl, truncateText } from '../../utils/cctv';
 import { CCTVFeedFrame } from './CCTVFeedFrame';
 
 export function FullscreenCCTVModal({ dark, camera, onClose }) {
+  useEffect(() => {
+    const htmlOriginal = document.documentElement.style.overflow;
+    const bodyOriginal = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.documentElement.style.overflow = htmlOriginal;
+      document.body.style.overflow = bodyOriginal;
+    };
+  }, []);
+
   if (!camera) return null;
 
   const feedUrl = buildCctvFeedUrl(camera);

@@ -102,6 +102,19 @@ export default function IntercomPage() {
   }, []);
 
   useEffect(() => {
+    if (fullscreen) {
+      const htmlOriginal = document.documentElement.style.overflow;
+      const bodyOriginal = document.body.style.overflow;
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.documentElement.style.overflow = htmlOriginal;
+        document.body.style.overflow = bodyOriginal;
+      };
+    }
+  }, [fullscreen]);
+
+  useEffect(() => {
     if (!micEnabled) {
       return undefined;
     }

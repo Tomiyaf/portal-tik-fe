@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 
 export function Modal({ children, onClose }) {
   useEffect(() => {
-    const original = document.body.style.overflow;
+    const htmlOriginal = document.documentElement.style.overflow;
+    const bodyOriginal = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = original;
+      document.documentElement.style.overflow = htmlOriginal;
+      document.body.style.overflow = bodyOriginal;
     };
   }, []);
 
