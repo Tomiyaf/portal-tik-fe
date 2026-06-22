@@ -223,51 +223,53 @@ export default function LogsPage() {
             </SelectField> */}
           </div>
         </div>
-        <div className="h-56 min-h-56 w-full min-w-0">
-          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-            <AreaChart data={chartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="logsAccessGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.6} />
-                  <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid
-                strokeDasharray="3 3"
-                stroke={dark ? '#1f2937' : '#e5e7eb'}
-                vertical={false}
-              />
-              <XAxis
-                dataKey="hour"
-                stroke={dark ? '#64748b' : '#94a3b8'}
-                fontSize={9}
-                tickLine={false}
-                axisLine={false}
-                interval={3}
-              />
-              <YAxis
-                stroke={dark ? '#64748b' : '#94a3b8'}
-                fontSize={9}
-                tickLine={false}
-                axisLine={false}
-              />
-              <Tooltip
-                contentStyle={{
-                  background: dark ? '#0b1226' : '#fff',
-                  border: '1px solid rgba(59,130,246,0.3)',
-                  borderRadius: 12,
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="access"
-                stroke="#3b82f6"
-                strokeWidth={2}
-                fill="url(#logsAccessGradient)"
-                isAnimationActive={false}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+        <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+          <div className="h-56 min-h-56 min-w-[480px] sm:min-w-[640px]">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <AreaChart data={chartData} margin={{ top: 0, right: 12, left: -12, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="logsAccessGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.6} />
+                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke={dark ? '#1f2937' : '#e5e7eb'}
+                  vertical={false}
+                />
+                <XAxis
+                  dataKey="hour"
+                  stroke={dark ? '#64748b' : '#94a3b8'}
+                  fontSize={9}
+                  tickLine={false}
+                  axisLine={false}
+                  interval={3}
+                />
+                <YAxis
+                  stroke={dark ? '#64748b' : '#94a3b8'}
+                  fontSize={9}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <Tooltip
+                  contentStyle={{
+                    background: dark ? '#0b1226' : '#fff',
+                    border: '1px solid rgba(59,130,246,0.3)',
+                    borderRadius: 12,
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="access"
+                  stroke="#3b82f6"
+                  strokeWidth={2}
+                  fill="url(#logsAccessGradient)"
+                  isAnimationActive={false}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
         </div>
         {chartLoading ? (
           <p className="mt-3 text-xs opacity-60">
