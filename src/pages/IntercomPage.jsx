@@ -9,7 +9,6 @@ import {
   Minimize2,
   Mic,
   MicOff,
-  PhoneCall,
   Video,
   Wifi,
   WifiOff,
@@ -80,7 +79,6 @@ export default function IntercomPage() {
           locale: id,
         })}`
       : 'Terakhir diakses -';
-  const gateLabel = gate === 'opening' ? 'Membuka' : gate === 'open' ? 'Terbuka' : 'Tertutup';
 
   const startCooldown = () => {
     setCooldown(true);
