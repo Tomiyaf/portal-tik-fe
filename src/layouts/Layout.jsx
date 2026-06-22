@@ -33,7 +33,7 @@ export default function Layout() {
 
   return (
     <div
-      className={`relative min-h-screen w-full ${
+      className={`relative min-h-dvh w-full ${
         dark
           ? 'bg-linear-to-br from-[#040816] via-[#071230] to-[#040816] text-slate-100'
           : 'bg-linear-to-br from-[#e6f0ff] via-[#f0f5ff] to-[#e0edff] text-slate-900'
@@ -52,7 +52,7 @@ export default function Layout() {
         />
       </div>
 
-      <div className="relative z-10 flex min-h-screen">
+      <div className="relative z-10 flex min-h-dvh">
         <Sidebar
           dark={dark}
           user={user}
