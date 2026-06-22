@@ -9,7 +9,13 @@ function readTheme() {
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
+function applyThemeClass(theme) {
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.toggle('dark', theme === 'dark');
+}
+
 let currentTheme = readTheme();
+applyThemeClass(currentTheme);
 
 function emit() {
   listeners.forEach((listener) => listener());
@@ -23,6 +29,7 @@ export function getTheme() {
 export function setTheme(nextTheme) {
   currentTheme = nextTheme;
   localStorage.setItem(THEME_KEY, nextTheme);
+  applyThemeClass(currentTheme);
   emit();
 }
 
@@ -39,6 +46,7 @@ export function syncThemeFromStorage() {
   const stored = localStorage.getItem(THEME_KEY);
   if (stored && stored !== currentTheme) {
     currentTheme = stored;
+    applyThemeClass(currentTheme);
     listeners.forEach((listener) => listener());
   }
 }
