@@ -280,9 +280,9 @@ export default function LogsPage() {
       </div>
 
       <div className={glass(dark, 'p-4')}>
-        <div className="flex flex-col gap-3">
+        <div className="flex gap-3 items-stretch flex-col sm:flex-row sm:items-center">
           <div
-            className={`flex min-w-55 flex-1 items-center gap-2 rounded-xl border px-3 py-2 ${
+            className={`flex h-fit min-w-55 flex-1 items-center gap-2 rounded-xl border px-3 py-2 ${
               dark
                 ? 'border-white/10 bg-white/5 focus-within:border-blue-400'
                 : 'border-blue-200 bg-white/50 focus-within:border-blue-400 focus-within:bg-white focus-within:shadow-inner text-blue-900'
@@ -368,7 +368,7 @@ export default function LogsPage() {
             >
               <tr className="text-[11px] uppercase tracking-wider">
                 <th className="px-5 py-3 font-normal">Pengguna</th>
-                <th className="px-5 py-3 font-normal">Peran</th>
+                <th className="px-5 py-3 font-normal">Role</th>
                 <th className="px-5 py-3 font-normal">Aksi</th>
                 <th className="px-5 py-3 font-normal">Metode</th>
                 <th className="px-5 py-3 font-normal">Status</th>
