@@ -4,7 +4,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
 import {
   DoorOpen,
-  Lock,
+  DoorClosed,
   Maximize2,
   Minimize2,
   Mic,
@@ -428,14 +428,16 @@ export default function IntercomPage() {
                   </div>
                 </div>
 
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs opacity-70">
-                  {deviceOnline ? (
-                    <Wifi className="h-3.5 w-3.5 text-emerald-500" />
-                  ) : (
-                    <WifiOff className="h-3.5 w-3.5 text-red-500" />
-                  )}{' '}
-                  {deviceOnline ? 'Online' : 'Offline'}
-                  <span></span> {lastOpenedText}
+                <div className="mt-3 flex flex-col gap-2 text-xs opacity-70">
+                  <div className="flex gap-3">
+                    {deviceOnline ? (
+                      <Wifi className="h-3.5 w-3.5 text-emerald-500" />
+                    ) : (
+                      <WifiOff className="h-3.5 w-3.5 text-red-500" />
+                    )}{' '}
+                    <span>{deviceOnline ? 'Online' : 'Offline'}</span>
+                  </div>
+                  {lastOpenedText}
                 </div>
 
                 <p className="mt-0.5 text-xs opacity-50">Operator: {latestOperator}</p>
@@ -458,7 +460,7 @@ export default function IntercomPage() {
                     disabled={loadingGate || cooldown}
                     className="flex h-10 w-full items-center justify-center gap-1.5 rounded-xl bg-red-500/90 text-sm text-white shadow-lg shadow-red-500/30 transition hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-70 sm:h-11 sm:w-auto sm:flex-1 sm:gap-2"
                   >
-                    <Lock className="h-4 w-4" />
+                    <DoorClosed className="h-4 w-4" />
                     Tutup
                   </button>
                 </div>

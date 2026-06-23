@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Users,
   DoorOpen,
+  DoorClosed,
   Car,
   Cpu,
   PhoneCall,
@@ -12,7 +13,6 @@ import {
   ChevronRight,
   Wifi,
   WifiOff,
-  Lock,
   Maximize2,
   Video,
 } from 'lucide-react';
@@ -455,7 +455,7 @@ export default function DashboardPage() {
                   disabled={loadingGate || cooldown}
                   className="flex h-10 items-center justify-center gap-1.5 rounded-xl bg-red-500/90 text-sm text-white shadow-lg shadow-red-500/30 hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-70 sm:h-11 sm:gap-2"
                 >
-                  <Lock className="h-4 w-4" /> Tutup
+                  <DoorClosed className="h-4 w-4" /> Tutup
                 </button>
               </div>
             </div>
