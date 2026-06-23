@@ -2,7 +2,7 @@ import { Camera, Edit2, Trash2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { LoadingIndicator } from '../LoadingIndicator';
 import { glass } from '../../utils/glass';
-import { formatCctvType, formatShortDate, truncateText } from '../../utils/cctv';
+import { formatCctvType, truncateText } from '../../utils/cctv';
 import { formatDate } from '../../utils/formatDate';
 
 export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
