@@ -34,7 +34,7 @@ function SidebarContent({ dark, user, onLogout, onClose, showHeader = true }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col h-full">
       {showHeader ? (
         <div className="mb-7 flex items-center gap-2.5">
           <div className="grid h-9 w-9 p-1 place-items-center rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30">
@@ -164,7 +164,7 @@ export function Sidebar({ dark, user, onLogout, isOpen, onClose }) {
               onClick={onClose}
             />
             <motion.aside
-              className={`fixed left-0 top-0 z-50 h-dvh w-72 border-r p-4 md:hidden ${
+              className={`fixed left-0 top-0 z-50 flex h-dvh w-72 flex-col border-r p-4 md:hidden ${
                 dark
                   ? 'border-white/10 bg-[#040816]/90 backdrop-blur-xl'
                   : 'border-blue-200/40 bg-white/90 backdrop-blur-xl'
@@ -174,7 +174,7 @@ export function Sidebar({ dark, user, onLogout, isOpen, onClose }) {
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 260, damping: 26 }}
             >
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6 flex shrink-0 items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="p-1 grid h-9 w-9 place-items-center rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30">
                     <img src="/gate-tik-icon.svg" alt="Logo" />
@@ -195,13 +195,15 @@ export function Sidebar({ dark, user, onLogout, isOpen, onClose }) {
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <SidebarContent
-                dark={dark}
-                user={user}
-                onLogout={onLogout}
-                onClose={onClose}
-                showHeader={false}
-              />
+              <div className="min-h-0 flex-1">
+                <SidebarContent
+                  dark={dark}
+                  user={user}
+                  onLogout={onLogout}
+                  onClose={onClose}
+                  showHeader={false}
+                />
+              </div>
             </motion.aside>
           </>
         ) : null}
