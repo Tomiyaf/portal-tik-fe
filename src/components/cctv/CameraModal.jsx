@@ -60,7 +60,7 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
           <div>
             <h2 className="tracking-tight">{isEdit ? 'Ubah Kamera' : 'Tambah Kamera'}</h2>
             <p className="text-sm opacity-60">
-              {isEdit ? `Editing: ${camera.camera_name}` : 'Tambah kamera baru ke sistem'}
+              {isEdit ? `${camera.camera_name}` : 'Tambah kamera baru ke sistem'}
             </p>
           </div>
           <button
@@ -92,17 +92,17 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
 
           <Field label="Path">
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm opacity-40">/</span>
+              {/* <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm opacity-40">/</span> */}
               <input
                 value={form.path}
                 onChange={(event) => setForm((prev) => ({ ...prev, path: event.target.value }))}
                 placeholder="e.g. gate1"
-                className={`${inputClass} pl-6`}
+                className={`${inputClass}`}
               />
             </div>
-            <p className="mt-1.5 text-[11px] opacity-40">
+            {/* <p className="mt-1.5 text-[11px] opacity-40">
               Path MediaMTX untuk stream, misalnya gate1 atau intercom.
-            </p>
+            </p> */}
           </Field>
 
           <Field label="Stream URL">
@@ -113,14 +113,12 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, stream_url: event.target.value }))
                 }
-                placeholder="rtsp://... atau http://..."
+                placeholder="rtsp://user:password@ip_address:port/Streaming/Channels/102"
                 className={`${inputClass} pl-8`}
                 required
               />
             </div>
-            <p className="mt-1.5 text-[11px] opacity-40">
-              URL RTSP/HTTP yang disimpan di backend.
-            </p>
+            {/* <p className="mt-1.5 text-[11px] opacity-40">URL RTSP/HTTP yang disimpan di backend.</p> */}
           </Field>
 
           <Field label="Tipe">
