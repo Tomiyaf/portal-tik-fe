@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { LoadingIndicator } from '../LoadingIndicator';
 import { glass } from '../../utils/glass';
 import { formatCctvType, formatShortDate, truncateText } from '../../utils/cctv';
+import { formatDate } from '../../utils/formatDate';
 
 export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
   return (
@@ -57,42 +58,42 @@ export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
                           <Camera className="h-4 w-4 text-white/70" />
                         </div>
                         <div className="min-w-0">
-                          <p className="truncate text-[13px] font-medium">{camera.camera_name}</p>
+                          <p className="truncate text-sm font-medium">{camera.camera_name}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3">
                       <span
-                        className={`flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] ${
+                        className={`flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-xs ${
                           camera.type === 'intercom'
                             ? 'bg-amber-500/20 text-amber-500'
                             : 'bg-blue-500/15 text-blue-500'
                         }`}
                       >
-                        <span
-                          className={`h-1.5 w-1.5 rounded-full ${
-                            camera.type === 'intercom' ? 'bg-amber-400' : 'bg-blue-400'
-                          }`}
-                        />
+                        {/* <span
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          camera.type === 'intercom' ? 'bg-amber-400' : 'bg-blue-400'
+                        }`}
+                        /> */}
                         {formatCctvType(camera.type)}
                       </span>
                     </td>
                     <td className="px-5 py-3">
                       <code
-                        className={`rounded-md px-2 py-0.5 text-xs ${
+                        className={`rounded-md px-2 py-0.5 text-sm ${
                           dark ? 'bg-white/5 text-blue-300' : 'bg-blue-50 text-blue-700'
                         }`}
                       >
-                        /{camera.path || '-'}
+                        {camera.path || '-'}
                       </code>
                     </td>
                     <td className="px-5 py-3">
-                      <p className="font-mono text-xs opacity-60" title={camera.stream_url}>
+                      <p className="font-mono text-sm opacity-60" title={camera.stream_url}>
                         {truncateText(camera.stream_url, 48)}
                       </p>
                     </td>
-                    <td className="px-5 py-3 text-xs tabular-nums opacity-50">
-                      {formatShortDate(camera.created_at)}
+                    <td className="px-5 py-3 text-sm tabular-nums opacity-50">
+                      {formatDate(camera.created_at)}
                     </td>
                     <td className="px-5 py-3">
                       <div className="flex justify-end gap-1">
