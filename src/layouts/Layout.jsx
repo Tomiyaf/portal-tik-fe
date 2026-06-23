@@ -134,13 +134,13 @@ export default function Layout() {
               <Bell className="h-4 w-4" />
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
             </button> */}
-            <span
+            {/* <span
               className={`hidden rounded-full px-3 py-1 text-[11px] uppercase tracking-wider sm:inline ${
                 dark ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-500/10 text-blue-700'
               }`}
             >
               {user?.role || 'user'}
-            </span>
+            </span> */}
           </header>
 
           <main className="flex-1 px-4 py-6 md:px-8">
