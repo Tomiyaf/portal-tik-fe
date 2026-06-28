@@ -78,14 +78,14 @@ export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
                         {formatCctvType(camera.type)}
                       </span>
                     </td>
-                    <td className="px-5 py-3">
-                      <code
+                    <td className="px-5 py-3 opacity-70">
+                      {/* <code
                         className={`rounded-md px-2 py-0.5 text-sm ${
                           dark ? 'bg-white/5 text-blue-300' : 'bg-blue-50 text-blue-700'
                         }`}
-                      >
-                        {camera.path || '-'}
-                      </code>
+                      > */}
+                      {camera.path || '-'}
+                      {/* </code> */}
                     </td>
                     <td className="px-5 py-3">
                       <p className="font-mono text-sm opacity-60" title={camera.stream_url}>
