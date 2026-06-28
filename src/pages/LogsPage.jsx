@@ -150,7 +150,7 @@ export default function LogsPage() {
         search: search || undefined,
       });
 
-      const headers = ['Pengguna', 'Peran', 'Aksi', 'Metode', 'Status', 'Catatan', 'Waktu'];
+      const headers = ['Pengguna', 'Role', 'Aksi', 'Metode', 'Status', 'Catatan', 'Waktu'];
       const rows = allLogs.map((entry) => [
         entry?.user?.full_name || '-',
         entry?.user?.role || '-',
