@@ -616,7 +616,7 @@ export default function DashboardPage() {
                 <thead className={dark ? 'text-slate-400' : 'text-slate-500'}>
                   <tr className="text-[11px] uppercase tracking-wider">
                     <th className="px-3 py-2 font-normal">Pengguna</th>
-                    <th className="px-3 py-2 font-normal">Peran</th>
+                    <th className="px-3 py-2 font-normal">Role</th>
                     <th className="px-3 py-2 font-normal">Aksi</th>
                     <th className="px-3 py-2 font-normal">Metode</th>
                     <th className="px-3 py-2 font-normal">Status</th>
