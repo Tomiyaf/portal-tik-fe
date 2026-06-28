@@ -101,11 +101,11 @@ export function CameraFeedCard({ camera, dark, onEdit, onDelete, onFullscreen })
             <p
               className={`mt-0.5 truncate text-[10px] ${dark ? 'text-white/35' : 'text-slate-400'}`}
             >
-              {camera.path ? `/${camera.path}` : '-'}
+              {camera.path ? `${camera.path}` : '-'}
             </p>
           </div>
         </div>
-        <span
+        {/* <span
           className={`ml-3 flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] ${
             camera.type === 'intercom'
               ? 'bg-amber-500/20 text-amber-400'
@@ -118,7 +118,7 @@ export function CameraFeedCard({ camera, dark, onEdit, onDelete, onFullscreen })
             }`}
           />
           {formatCctvType(camera.type)}
-        </span>
+        </span> */}
       </div>
     </motion.div>
   );
