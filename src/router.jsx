@@ -1,7 +1,9 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { RequireAuth } from './routes/RequireAuth';
+import { RequireRole } from './routes/RequireRole';
 import { PublicOnly } from './routes/PublicOnly';
+import { canAccessIntercom, canAccessLogs, canAccessParking, canAccessProfile, canAccessUsers } from './lib/rbac';
 import LoginPage from './pages/LoginPage';
 import Layout from './layouts/Layout';
 import DashboardPage from './pages/DashboardPage';
@@ -39,14 +41,49 @@ export const router = createBrowserRouter([
         ),
         children: [
           { path: '/dashboard', element: <DashboardPage /> },
-          { path: '/users', element: <UsersPage /> },
+          {
+            path: '/users',
+            element: (
+              <RequireRole allow={canAccessUsers}>
+                <UsersPage />
+              </RequireRole>
+            ),
+          },
           { path: '/cctv', element: <CCTVPage /> },
-          { path: '/parking', element: <ParkingPage /> },
+          {
+            path: '/parking',
+            element: (
+              <RequireRole allow={canAccessParking}>
+                <ParkingPage />
+              </RequireRole>
+            ),
+          },
           // { path: '/gate-control', element: <GateControlPage /> },
-          { path: '/intercom', element: <IntercomPage /> },
-          { path: '/logs', element: <LogsPage /> },
+          {
+            path: '/intercom',
+            element: (
+              <RequireRole allow={canAccessIntercom}>
+                <IntercomPage />
+              </RequireRole>
+            ),
+          },
+          {
+            path: '/logs',
+            element: (
+              <RequireRole allow={canAccessLogs}>
+                <LogsPage />
+              </RequireRole>
+            ),
+          },
           // { path: '/settings', element: <SettingsPage /> },
-          { path: '/profile', element: <ProfilePage /> },
+          {
+            path: '/profile',
+            element: (
+              <RequireRole allow={canAccessProfile}>
+                <ProfilePage />
+              </RequireRole>
+            ),
+          },
         ],
       },
       { path: '/download', element: <DownloadPage /> },

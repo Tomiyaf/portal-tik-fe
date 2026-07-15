@@ -29,6 +29,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../contexts/useAuth';
+import { isAdmin } from '../lib/rbac';
 import { useAccessLogs } from '../hooks/useAccessLogs';
 import { useGateControl } from '../hooks/useGateControl';
 import { useIotDevice } from '../hooks/useIotDevice';
@@ -51,6 +52,7 @@ const initialChartData = Array.from({ length: 24 }).map((_, i) => ({
 export default function DashboardPage() {
   const { dark } = useTheme();
   const { user } = useAuth();
+  const canViewUserStats = isAdmin(user);
   const navigate = useNavigate();
 
   const [gate, setGate] = useState('closed');
@@ -100,13 +102,15 @@ export default function DashboardPage() {
     : 0;
 
   const stats = [
-    {
-      label: 'Pengguna Aktif',
-      value: activeUsersTotal,
-      delta: `Total ${allUsersTotal}`,
-      icon: <Users className="h-5 w-5" />,
-      tone: 'blue',
-    },
+    canViewUserStats
+      ? {
+          label: 'Pengguna Aktif',
+          value: activeUsersTotal,
+          delta: `Total ${allUsersTotal}`,
+          icon: <Users className="h-5 w-5" />,
+          tone: 'blue',
+        }
+      : null,
     {
       label: 'Akses Gate',
       value: gateTriggersTotal,
@@ -135,7 +139,7 @@ export default function DashboardPage() {
       icon: <PhoneCall className="h-5 w-5" />,
       tone: 'rose',
     },
-  ];
+  ].filter(Boolean);
 
   const chartData = useMemo(() => {
     if (!chartLogs.length) return initialChartData;

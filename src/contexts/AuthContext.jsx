@@ -3,15 +3,15 @@ import { api } from '../lib/api';
 import { clearStoredAuth, getStoredToken, getStoredUser, setStoredAuth } from '../lib/authStorage';
 import { AuthContext } from './authContextBase';
 
-function isAdmin(user) {
-  return user?.role === 'admin';
+function hasDashboardAccess(user) {
+  return user?.role === 'admin' || user?.role === 'staff';
 }
 
 function getInitialAuth() {
   const storedToken = getStoredToken();
   const storedUser = getStoredUser();
 
-  if (storedToken && !isAdmin(storedUser)) {
+  if (storedToken && !hasDashboardAccess(storedUser)) {
     clearStoredAuth();
     return { token: null, user: null };
   }
@@ -30,18 +30,18 @@ export function AuthProvider({ children }) {
     });
 
     const payload = response?.data || response;
-    if (!isAdmin(payload?.user)) {
+    if (!hasDashboardAccess(payload?.user)) {
       try {
         await api.post('/api/auth/logout', null, {
           headers: payload?.token ? { Authorization: `Bearer ${payload.token}` } : undefined,
         });
       } catch {
-        // Local auth cleanup below is still enough to keep this dashboard admin-only.
+        clearStoredAuth();
       }
       clearStoredAuth();
       setToken(null);
       setUser(null);
-      throw new Error('Forbidden: User does not have admin access.');
+      throw new Error('Forbidden: User does not have access.');
     }
 
     setToken(payload?.token ?? null);
@@ -80,7 +80,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         updateUser,
-        isAuthenticated: Boolean(token && isAdmin(user)),
+        isAuthenticated: Boolean(token && hasDashboardAccess(user)),
       }}
     >
       {children}

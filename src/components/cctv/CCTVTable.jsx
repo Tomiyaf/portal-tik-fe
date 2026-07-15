@@ -5,7 +5,7 @@ import { glass } from '../../utils/glass';
 import { formatCctvType, truncateText } from '../../utils/cctv';
 import { formatDate } from '../../utils/formatDate';
 
-export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
+export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete, canManage = true }) {
   return (
     <div className={glass(dark, 'overflow-hidden')}>
       <div className="overflow-x-auto">
@@ -19,19 +19,22 @@ export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
               <th className="px-5 py-3 font-normal">Path</th>
               <th className="px-5 py-3 font-normal">Stream URL</th>
               <th className="px-5 py-3 font-normal">Dibuat</th>
-              <th className="px-5 py-3 text-right font-normal">Aksi</th>
+               {canManage ? <th className="px-5 py-3 text-right font-normal">Aksi</th> : null}
+
             </tr>
           </thead>
           <tbody className={`divide-y ${dark ? 'divide-white/[0.04]' : 'divide-blue-100/60'}`}>
             {loading ? (
               <tr>
-                <td className="px-5 py-6 text-center opacity-60" colSpan={6}>
+                 <td className="px-5 py-6 text-center opacity-60" colSpan={canManage ? 6 : 5}>
+
                   <LoadingIndicator label="Memuat kamera..." className="justify-center" />
                 </td>
               </tr>
             ) : error ? (
               <tr>
-                <td className="px-5 py-6 text-center text-red-500/90" colSpan={6}>
+                 <td className="px-5 py-6 text-center text-red-500/90" colSpan={canManage ? 6 : 5}>
+
                   {error}
                 </td>
               </tr>
@@ -95,22 +98,26 @@ export function CCTVTable({ dark, cameras, loading, error, onEdit, onDelete }) {
                     <td className="px-5 py-3 text-sm tabular-nums opacity-50">
                       {formatDate(camera.created_at)}
                     </td>
-                    <td className="px-5 py-3">
-                      <div className="flex justify-end gap-1">
-                        <IconButton dark={dark} title="Ubah" onClick={() => onEdit(camera)}>
-                          <Edit2 className="h-4 w-4 text-blue-400" />
-                        </IconButton>
-                        <IconButton dark={dark} title="Hapus" onClick={() => onDelete(camera)}>
-                          <Trash2 className="h-4 w-4 text-red-400" />
-                        </IconButton>
-                      </div>
-                    </td>
+                     {canManage ? (
+                       <td className="px-5 py-3">
+                         <div className="flex justify-end gap-1">
+                           <IconButton dark={dark} title="Ubah" onClick={() => onEdit(camera)}>
+                             <Edit2 className="h-4 w-4 text-blue-400" />
+                           </IconButton>
+                           <IconButton dark={dark} title="Hapus" onClick={() => onDelete(camera)}>
+                             <Trash2 className="h-4 w-4 text-red-400" />
+                           </IconButton>
+                         </div>
+                       </td>
+                     ) : null}
+
                   </motion.tr>
                 ))}
               </AnimatePresence>
             ) : (
               <tr>
-                <td className="px-5 py-12 text-center text-sm opacity-40" colSpan={6}>
+                 <td className="px-5 py-12 text-center text-sm opacity-40" colSpan={canManage ? 6 : 5}>
+
                   Tidak ada kamera ditemukan.
                 </td>
               </tr>

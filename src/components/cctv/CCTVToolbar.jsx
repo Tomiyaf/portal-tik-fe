@@ -14,11 +14,12 @@ export function CCTVToolbar({
   onQueryChange,
   layout,
   onLayoutChange,
+  canManage = true,
 }) {
   return (
     <div className={glass(dark, 'flex flex-wrap items-center gap-3 p-3')}>
       <div className={`flex rounded-xl p-0.5 ${dark ? 'bg-white/5' : 'bg-blue-100/60'}`}>
-        {tabs.map((item) => {
+        {tabs.filter((item) => canManage || item.value === 'monitor').map((item) => {
           const Icon = item.icon;
 
           return (

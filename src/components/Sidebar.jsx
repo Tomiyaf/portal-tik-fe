@@ -14,24 +14,36 @@ import {
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { canAccessLogs, canAccessParking, canAccessProfile, canAccessUsers, canAccessIntercom } from '../lib/rbac';
 
-const navItems = [
-  { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-4 w-4" /> },
-  // { path: '/gate-control', label: 'Gate Control', icon: <DoorOpen className="h-4 w-4" /> },
-  { path: '/cctv', label: 'Monitoring CCTV', icon: <Video className="h-4 w-4" /> },
-  { path: '/parking', label: 'Manajemen Parkir', icon: <Car className="h-4 w-4" /> },
-  { path: '/users', label: 'Manajemen Pengguna', icon: <Users className="h-4 w-4" /> },
-  { path: '/logs', label: 'Log Akses', icon: <ScrollText className="h-4 w-4" /> },
-  { path: '/intercom', label: 'Intercom', icon: <PhoneCall className="h-4 w-4" /> },
-  { path: '/profile', label: 'Profil', icon: <User className="h-4 w-4" /> },
-  // { path: '/settings', label: 'Settings', icon: <Settings className="h-4 w-4" /> },
-];
+function getNavItems(user) {
+  return [
+    { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-4 w-4" /> },
+    { path: '/cctv', label: 'Monitoring CCTV', icon: <Video className="h-4 w-4" /> },
+    canAccessParking(user)
+      ? { path: '/parking', label: 'Manajemen Parkir', icon: <Car className="h-4 w-4" /> }
+      : null,
+    canAccessUsers(user)
+      ? { path: '/users', label: 'Manajemen Pengguna', icon: <Users className="h-4 w-4" /> }
+      : null,
+    canAccessLogs(user)
+      ? { path: '/logs', label: 'Log Akses', icon: <ScrollText className="h-4 w-4" /> }
+      : null,
+    canAccessIntercom(user)
+      ? { path: '/intercom', label: 'Intercom', icon: <PhoneCall className="h-4 w-4" /> }
+      : null,
+    canAccessProfile(user)
+      ? { path: '/profile', label: 'Profil', icon: <User className="h-4 w-4" /> }
+      : null,
+  ].filter(Boolean);
+}
 
 function SidebarContent({ dark, user, onLogout, onClose, showHeader = true }) {
   const displayName = user?.full_name || user?.name || 'User';
   const email = user?.email || 'user@example.com';
   const initial = displayName.charAt(0) || 'U';
   const navigate = useNavigate();
+  const navItems = getNavItems(user);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col h-full">

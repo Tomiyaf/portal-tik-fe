@@ -1,10 +1,10 @@
 import { Camera, Maximize2, Settings, Trash2, WifiOff } from 'lucide-react';
 import { motion } from 'motion/react';
 import { glass } from '../../utils/glass';
-import { buildCctvFeedUrl, formatCctvType } from '../../utils/cctv';
+import { buildCctvFeedUrl } from '../../utils/cctv';
 import { CCTVFeedFrame } from './CCTVFeedFrame';
 
-export function CameraFeedCard({ camera, dark, onEdit, onDelete, onFullscreen }) {
+export function CameraFeedCard({ camera, dark, onEdit, onDelete, onFullscreen, canManage = true }) {
   const feedUrl = buildCctvFeedUrl(camera);
   const canPreview = Boolean(feedUrl);
 
@@ -64,28 +64,32 @@ export function CameraFeedCard({ camera, dark, onEdit, onDelete, onFullscreen })
               <Maximize2 className="h-4 w-4" />
             </button>
           ) : null}
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              onEdit(camera);
-            }}
-            className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/30"
-            title="Ubah"
-          >
-            <Settings className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              onDelete(camera);
-            }}
-            className="grid h-9 w-9 place-items-center rounded-full bg-red-500/30 text-red-200 backdrop-blur transition hover:bg-red-500/50"
-            title="Hapus"
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
+          {canManage ? (
+            <>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onEdit(camera);
+                }}
+                className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white backdrop-blur transition hover:bg-white/30"
+                title="Ubah"
+              >
+                <Settings className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onDelete(camera);
+                }}
+                className="grid h-9 w-9 place-items-center rounded-full bg-red-500/30 text-red-200 backdrop-blur transition hover:bg-red-500/50"
+                title="Hapus"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
 
