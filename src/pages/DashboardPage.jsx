@@ -615,17 +615,17 @@ export default function DashboardPage() {
             </button>
           </div>
           <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-            <div className="min-w-[920px] overflow-hidden rounded-xl">
+            <div className="min-w-[1040px] overflow-hidden rounded-xl">
               <table className="w-full table-fixed text-left text-sm">
                 <thead className={dark ? 'text-slate-400' : 'text-slate-500'}>
                   <tr className="text-[11px] uppercase tracking-wider">
-                    <th className="w-[18%] px-3 py-2 font-normal">Pengguna</th>
-                    <th className="w-[10%] px-3 py-2 font-normal">Role</th>
+                    <th className="w-[17%] px-3 py-2 font-normal">Pengguna</th>
+                    <th className="w-[9%] px-3 py-2 font-normal">Role</th>
                     <th className="w-[8%] px-3 py-2 font-normal">Aksi</th>
                     <th className="w-[8%] px-3 py-2 font-normal">Metode</th>
                     <th className="w-[10%] px-3 py-2 font-normal">Status</th>
-                    <th className="w-[26%] px-3 py-2 font-normal">Catatan</th>
-                    <th className="w-[20%] px-3 py-2 text-center font-normal">Waktu</th>
+                    <th className="w-[33%] px-3 py-2 font-normal">Catatan</th>
+                    <th className="w-[15%] px-3 py-2 font-normal">Waktu</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-current/10">
@@ -678,7 +678,7 @@ export default function DashboardPage() {
                             </span>
                           </td>
                           <td className="px-3 py-3 opacity-70 break-words">{entry?.notes || '-'}</td>
-                          <td className="px-3 py-3 text-center tabular-nums opacity-70 whitespace-nowrap">
+                          <td className="px-3 py-3 tabular-nums opacity-70 whitespace-nowrap">
                             {timestamp}
                           </td>
                         </tr>
