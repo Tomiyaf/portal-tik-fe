@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Calendar, Eye, EyeOff, IdCard, Lock, Mail, Phone, Save, Shield, User } from 'lucide-react';
 import { useProfile } from '../hooks/useProfile';
 import { useTheme } from '../hooks/useTheme';
+import { formatDate } from '../utils/formatDate';
 import { glass } from '../utils/glass';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 
@@ -524,16 +525,4 @@ function inputClass(dark, readonly = false) {
       ? 'border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus:border-blue-500/50 focus:bg-white/10'
       : 'border-blue-200/60 bg-white/60 text-blue-900 placeholder:text-blue-900/40 focus:border-blue-400/70 focus:bg-white shadow-inner'
   }`;
-}
-
-function formatDate(dateString) {
-  if (!dateString) return '-';
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
 }
