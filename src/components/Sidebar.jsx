@@ -21,7 +21,7 @@ function getNavItems(user) {
     { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-4 w-4" /> },
     { path: '/cctv', label: 'Monitoring CCTV', icon: <Video className="h-4 w-4" /> },
     canAccessIntercom(user)
-      ? { path: '/intercom', label: 'Intercom', icon: <PhoneCall className="h-4 w-4" /> }
+      ? { path: '/intercom', label: 'Interkom', icon: <PhoneCall className="h-4 w-4" /> }
       : null,
     canAccessParking(user)
       ? { path: '/parking', label: 'Manajemen Parkir', icon: <Car className="h-4 w-4" /> }
