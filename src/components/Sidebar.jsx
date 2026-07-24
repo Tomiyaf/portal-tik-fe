@@ -20,6 +20,9 @@ function getNavItems(user) {
   return [
     { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="h-4 w-4" /> },
     { path: '/cctv', label: 'Monitoring CCTV', icon: <Video className="h-4 w-4" /> },
+    canAccessIntercom(user)
+      ? { path: '/intercom', label: 'Intercom', icon: <PhoneCall className="h-4 w-4" /> }
+      : null,
     canAccessParking(user)
       ? { path: '/parking', label: 'Manajemen Parkir', icon: <Car className="h-4 w-4" /> }
       : null,
@@ -28,9 +31,6 @@ function getNavItems(user) {
       : null,
     canAccessLogs(user)
       ? { path: '/logs', label: 'Log Akses', icon: <ScrollText className="h-4 w-4" /> }
-      : null,
-    canAccessIntercom(user)
-      ? { path: '/intercom', label: 'Intercom', icon: <PhoneCall className="h-4 w-4" /> }
       : null,
     canAccessProfile(user)
       ? { path: '/profile', label: 'Profil', icon: <User className="h-4 w-4" /> }
