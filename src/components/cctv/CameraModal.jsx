@@ -33,14 +33,39 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
 
   if (!open) return null;
 
-  const inputClass = `w-full rounded-xl border px-3 py-2 text-sm outline-none ${
-    dark
-      ? 'border-white/10 bg-white/5 text-white placeholder:text-white/30'
-      : 'border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400'
-  }`;
+  const getPathError = (val) => {
+    if (!val) return '';
+    const hasSpace = /\s/.test(val);
+    const hasOtherSymbol = /[^a-zA-Z0-9_\s]/.test(val);
+    if (hasSpace && hasOtherSymbol) {
+      return 'Tidak boleh ada spasi atau simbol selain _';
+    }
+    if (hasSpace) {
+      return 'Tidak boleh ada spasi';
+    }
+    if (hasOtherSymbol) {
+      return 'Tidak boleh ada simbol selain _';
+    }
+    return '';
+  };
+
+  const pathError = getPathError(form.path);
+  const isFormInvalid = Boolean(pathError);
+
+  const getInputClass = (hasError) =>
+    `w-full rounded-xl border px-3 py-2 text-sm outline-none transition ${
+      hasError
+        ? dark
+          ? 'border-red-500/70 bg-red-500/10 text-white placeholder:text-red-300/50'
+          : 'border-red-500/70 bg-red-50/50 text-slate-900 placeholder:text-red-300'
+        : dark
+          ? 'border-white/10 bg-white/5 text-white placeholder:text-white/30'
+          : 'border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400'
+    }`;
 
   const submit = async (event) => {
     event.preventDefault();
+    if (isFormInvalid) return;
     setError('');
     setSubmitting(true);
     try {
@@ -85,24 +110,20 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
                 setForm((prev) => ({ ...prev, camera_name: event.target.value }))
               }
               placeholder="e.g. Main Gate Camera"
-              className={inputClass}
+              className={getInputClass(false)}
               required
             />
           </Field>
 
-          <Field label="Path">
+          <Field label="Path" error={pathError}>
             <div className="relative">
-              {/* <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm opacity-40">/</span> */}
               <input
                 value={form.path}
                 onChange={(event) => setForm((prev) => ({ ...prev, path: event.target.value }))}
                 placeholder="e.g. gate1"
-                className={`${inputClass}`}
+                className={getInputClass(Boolean(pathError))}
               />
             </div>
-            {/* <p className="mt-1.5 text-[11px] opacity-40">
-              Path MediaMTX untuk stream, misalnya gate1 atau intercom.
-            </p> */}
           </Field>
 
           <Field label="Stream URL">
@@ -111,14 +132,16 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
               <input
                 value={form.stream_url}
                 onChange={(event) =>
-                  setForm((prev) => ({ ...prev, stream_url: event.target.value }))
+                  setForm((prev) => ({
+                    ...prev,
+                    stream_url: event.target.value.replace(/\s+/g, ''),
+                  }))
                 }
                 placeholder="rtsp://user:password@ip_address:port/Streaming/Channels/102"
-                className={`${inputClass} pl-8`}
+                className={`${getInputClass(false)} pl-8`}
                 required
               />
             </div>
-            {/* <p className="mt-1.5 text-[11px] opacity-40">URL RTSP/HTTP yang disimpan di backend.</p> */}
           </Field>
 
           <Field label="Tipe">
@@ -158,7 +181,7 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
 
           <button
             type="submit"
-            disabled={submitting || !form.camera_name.trim() || !form.stream_url.trim()}
+            disabled={submitting || !form.camera_name.trim() || !form.stream_url.trim() || isFormInvalid}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm text-white shadow-lg shadow-blue-500/30 disabled:cursor-not-allowed disabled:opacity-70"
           >
             <Check className="h-4 w-4" />
@@ -170,10 +193,15 @@ export function CameraModal({ dark, open, camera, onClose, onSave }) {
   );
 }
 
-function Field({ label, children }) {
+function Field({ label, children, error }) {
   return (
     <div className="flex flex-col gap-1 space-y-1 text-sm">
-      <span className="pl-1 text-xs uppercase tracking-widest opacity-60">{label}</span>
+      <div className="flex items-center justify-between px-1">
+        <span className="text-xs uppercase tracking-widest opacity-60">{label}</span>
+        {error ? (
+          <span className="text-[11px] font-medium text-red-500 dark:text-red-400">{error}</span>
+        ) : null}
+      </div>
       {children}
     </div>
   );
