@@ -29,7 +29,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../contexts/useAuth';
-import { isAdmin } from '../lib/rbac';
+import { canAccessUsers } from '../lib/rbac';
 import { useAccessLogs } from '../hooks/useAccessLogs';
 import { useGateControl } from '../hooks/useGateControl';
 import { useIotDevice } from '../hooks/useIotDevice';
@@ -52,7 +52,7 @@ const initialChartData = Array.from({ length: 24 }).map((_, i) => ({
 export default function DashboardPage() {
   const { dark } = useTheme();
   const { user } = useAuth();
-  const canViewUserStats = isAdmin(user);
+  const canViewUserStats = canAccessUsers(user);
   const navigate = useNavigate();
 
   const [gate, setGate] = useState('closed');
