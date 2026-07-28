@@ -19,6 +19,7 @@ export function UsersTable({
   onVerify,
   onDelete,
   footer,
+  canManage = true,
 }) {
   return (
     <div className={glass(dark, 'overflow-hidden')}>
@@ -76,24 +77,28 @@ export function UsersTable({
                       <IconBtn dark={dark} title="Detail" onClick={() => onDetail(userItem)}>
                         <Eye className="h-4 w-4 text-blue-500" />
                       </IconBtn>
-                      <IconBtn
-                        dark={dark}
-                        title="Verifikasi"
-                        onClick={() => onVerify?.(userItem)}
-                        disabled={
-                          userItem.role !== 'mahasiswa' ||
-                          userItem.status === 'active' ||
-                          verifyingId === userItem.id
-                        }
-                      >
-                        <UserCheck className="h-4 w-4 text-emerald-500" />
-                      </IconBtn>
-                      <IconBtn dark={dark} title="Ubah" onClick={() => onEdit?.(userItem)}>
-                        <UserPen className="h-4 w-4 text-amber-500" />
-                      </IconBtn>
-                      <IconBtn dark={dark} title="Hapus" onClick={() => onDelete(userItem)}>
-                        <Trash2 className="h-4 w-4 text-red-500" />
-                      </IconBtn>
+                      {canManage && (
+                        <>
+                          <IconBtn
+                            dark={dark}
+                            title="Verifikasi"
+                            onClick={() => onVerify?.(userItem)}
+                            disabled={
+                              userItem.role !== 'mahasiswa' ||
+                              userItem.status === 'active' ||
+                              verifyingId === userItem.id
+                            }
+                          >
+                            <UserCheck className="h-4 w-4 text-emerald-500" />
+                          </IconBtn>
+                          <IconBtn dark={dark} title="Ubah" onClick={() => onEdit?.(userItem)}>
+                            <UserPen className="h-4 w-4 text-amber-500" />
+                          </IconBtn>
+                          <IconBtn dark={dark} title="Hapus" onClick={() => onDelete(userItem)}>
+                            <Trash2 className="h-4 w-4 text-red-500" />
+                          </IconBtn>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
