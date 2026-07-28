@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { UserPlus, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useUsers } from '../hooks/useUsers';
+import { useAuth } from '../contexts/useAuth';
+import { canManageUsers } from '../lib/rbac';
 import { UsersFilters } from '../components/users/UsersFilters';
 import { UsersTable } from '../components/users/UsersTable';
 import { UserCreateModal } from '../components/users/UserCreateModal';
@@ -11,6 +13,8 @@ import { ConfirmDeleteModal } from '../components/users/ConfirmDeleteModal';
 
 export default function UsersPage() {
   const { dark } = useTheme();
+  const { user: currentUser } = useAuth();
+  const canManage = canManageUsers(currentUser);
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [role, setRole] = useState('all');
@@ -106,12 +110,14 @@ export default function UsersPage() {
         <div>
           <p className="text-sm opacity-60">{totalCount} pengguna terdaftar</p>
         </div>
-        <button
-          onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm text-white shadow-lg shadow-blue-500/30"
-        >
-          <UserPlus className="h-4 w-4" /> Pengguna Baru
-        </button>
+        {canManage && (
+          <button
+            onClick={() => setShowCreate(true)}
+            className="flex items-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm text-white shadow-lg shadow-blue-500/30"
+          >
+            <UserPlus className="h-4 w-4" /> Pengguna Baru
+          </button>
+        )}
       </div>
 
       <UsersFilters
@@ -139,6 +145,7 @@ export default function UsersPage() {
         loading={loading}
         error={error}
         verifyingId={verifyingId}
+        canManage={canManage}
         onDetail={(userItem) => setDetailUser(userItem)}
         onEdit={(userItem) => setEditUser(userItem)}
         onVerify={verifyUser}
