@@ -15,6 +15,10 @@ export function canAccessDashboard(user) {
 }
 
 export function canAccessUsers(user) {
+  return isAdmin(user) || isStaff(user);
+}
+
+export function canManageUsers(user) {
   return isAdmin(user);
 }
 
