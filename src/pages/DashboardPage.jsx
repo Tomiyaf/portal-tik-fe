@@ -615,79 +615,77 @@ export default function DashboardPage() {
             </button>
           </div>
           <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-            <div className="min-w-[1040px] overflow-hidden rounded-xl">
-              <table className="w-full table-fixed text-left text-sm">
-                <thead className={dark ? 'text-slate-400' : 'text-slate-500'}>
-                  <tr className="text-[11px] uppercase tracking-wider">
-                    <th className="w-[17%] px-3 py-2 font-normal">Pengguna</th>
-                    <th className="w-[9%] px-3 py-2 font-normal">Role</th>
-                    <th className="w-[8%] px-3 py-2 font-normal">Aksi</th>
-                    <th className="w-[8%] px-3 py-2 font-normal">Metode</th>
-                    <th className="w-[10%] px-3 py-2 font-normal">Status</th>
-                    <th className="w-[33%] px-3 py-2 font-normal">Catatan</th>
-                    <th className="w-[15%] px-3 py-2 font-normal">Waktu</th>
+            <table className="w-full min-w-[700px] text-left text-sm">
+              <thead className={dark ? 'text-slate-400' : 'text-slate-500'}>
+                <tr className="text-[11px] uppercase tracking-wider">
+                  <th className="px-3 py-2 font-normal">Pengguna</th>
+                  <th className="px-3 py-2 font-normal whitespace-nowrap">Role</th>
+                  <th className="px-3 py-2 font-normal whitespace-nowrap">Aksi</th>
+                  <th className="px-3 py-2 font-normal whitespace-nowrap">Metode</th>
+                  <th className="px-3 py-2 font-normal whitespace-nowrap">Status</th>
+                  <th className="px-3 py-2 font-normal">Catatan</th>
+                  <th className="px-3 py-2 font-normal whitespace-nowrap">Waktu</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-current/10">
+                {loadingLogs ? (
+                  <tr>
+                    <td className="px-3 py-4 text-center opacity-70" colSpan={7}>
+                      <LoadingIndicator label="Memuat log akses..." className="justify-center" />
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-current/10">
-                  {loadingLogs ? (
-                    <tr>
-                      <td className="px-3 py-4 text-center opacity-70" colSpan={7}>
-                        <LoadingIndicator label="Memuat log akses..." className="justify-center" />
-                      </td>
-                    </tr>
-                  ) : logError ? (
-                    <tr>
-                      <td className="px-3 py-4 text-center text-red-500/90" colSpan={7}>
-                        {logError}
-                      </td>
-                    </tr>
-                  ) : !recentLogs.length ? (
-                    <tr>
-                      <td className="px-3 py-4 text-center opacity-70" colSpan={7}>
-                        Belum ada data access log.
-                      </td>
-                    </tr>
-                  ) : (
-                    recentLogs.map((entry) => {
-                      const timestamp = entry?.created_at ? formatDate(entry.created_at) : '-';
-                      const statusClass = {
-                        success: 'bg-emerald-500/15 text-emerald-500',
-                        pending: 'bg-amber-500/15 text-amber-500',
-                        failed: 'bg-red-500/15 text-red-500',
-                      };
+                ) : logError ? (
+                  <tr>
+                    <td className="px-3 py-4 text-center text-red-500/90" colSpan={7}>
+                      {logError}
+                    </td>
+                  </tr>
+                ) : !recentLogs.length ? (
+                  <tr>
+                    <td className="px-3 py-4 text-center opacity-70" colSpan={7}>
+                      Belum ada data access log.
+                    </td>
+                  </tr>
+                ) : (
+                  recentLogs.map((entry) => {
+                    const timestamp = entry?.created_at ? formatDate(entry.created_at) : '-';
+                    const statusClass = {
+                      success: 'bg-emerald-500/15 text-emerald-500',
+                      pending: 'bg-amber-500/15 text-amber-500',
+                      failed: 'bg-red-500/15 text-red-500',
+                    };
 
-                      return (
-                        <tr key={entry.id} className="hover:bg-current/3">
-                          <td className="px-3 py-3 break-words">{entry?.user?.full_name || '-'}</td>
-                          <td className="px-3 py-3 capitalize opacity-70">
-                            {entry?.user?.role || '-'}
-                          </td>
-                          <td className="px-3 py-3 capitalize opacity-70">
-                            {entry?.action || '-'}
-                          </td>
-                          <td className="px-3 py-3 capitalize opacity-70">
-                            {entry?.access_method || '-'}
-                          </td>
-                          <td className="px-3 py-3">
-                            <span
-                              className={`inline-block rounded-full px-2 py-0.5 text-xs capitalize ${
-                                statusClass[entry?.access_status]
-                              }`}
-                            >
-                              {entry?.access_status || '-'}
-                            </span>
-                          </td>
-                          <td className="px-3 py-3 opacity-70 break-words">{entry?.notes || '-'}</td>
-                          <td className="px-3 py-3 tabular-nums opacity-70 whitespace-nowrap">
-                            {timestamp}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
+                    return (
+                      <tr key={entry.id} className="hover:bg-current/3">
+                        <td className="px-3 py-3 break-words font-medium">{entry?.user?.full_name || '-'}</td>
+                        <td className="px-3 py-3 capitalize opacity-70 whitespace-nowrap">
+                          {entry?.user?.role || '-'}
+                        </td>
+                        <td className="px-3 py-3 capitalize whitespace-nowrap">
+                          {entry?.action || '-'}
+                        </td>
+                        <td className="px-3 py-3 capitalize opacity-70 whitespace-nowrap">
+                          {entry?.access_method || '-'}
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          <span
+                            className={`inline-block rounded-full px-2 py-0.5 text-xs capitalize ${
+                              statusClass[entry?.access_status]
+                            }`}
+                          >
+                            {entry?.access_status || '-'}
+                          </span>
+                        </td>
+                        <td className="px-3 py-3 opacity-70 break-words max-w-xs">{entry?.notes || '-'}</td>
+                        <td className="px-3 py-3 tabular-nums opacity-70 whitespace-nowrap">
+                          {timestamp}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -362,18 +362,18 @@ export default function LogsPage() {
 
       <div className={glass(dark, 'overflow-hidden')}>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1040px] table-fixed text-left text-sm">
+          <table className="w-full min-w-[700px] text-left text-sm">
             <thead
               className={dark ? 'bg-white/3 text-slate-400' : 'bg-blue-50/50 text-blue-900/60'}
             >
               <tr className="text-[11px] uppercase tracking-wider">
-                <th className="w-[17%] px-5 py-3 font-normal">Pengguna</th>
-                <th className="w-[9%] px-5 py-3 font-normal">Role</th>
-                <th className="w-[8%] px-5 py-3 font-normal">Aksi</th>
-                <th className="w-[8%] px-5 py-3 font-normal">Metode</th>
-                <th className="w-[10%] px-5 py-3 font-normal">Status</th>
-                <th className="w-[33%] px-5 py-3 font-normal">Catatan</th>
-                <th className="w-[15%] px-5 py-3 font-normal">Waktu</th>
+                <th className="px-5 py-3 font-normal">Pengguna</th>
+                <th className="px-4 py-3 font-normal whitespace-nowrap">Role</th>
+                <th className="px-4 py-3 font-normal whitespace-nowrap">Aksi</th>
+                <th className="px-4 py-3 font-normal whitespace-nowrap">Metode</th>
+                <th className="px-4 py-3 font-normal whitespace-nowrap">Status</th>
+                <th className="px-5 py-3 font-normal">Catatan</th>
+                <th className="px-5 py-3 font-normal whitespace-nowrap">Waktu</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-current/10">
@@ -405,22 +405,22 @@ export default function LogsPage() {
                   };
                   return (
                     <tr key={entry.id} className="hover:bg-current/3">
-                      <td className="px-5 py-3 break-words">{entry?.user?.full_name || '-'}</td>
-                      <td className="px-5 py-3 capitalize opacity-70">
+                      <td className="px-5 py-3 break-words font-medium">{entry?.user?.full_name || '-'}</td>
+                      <td className="px-4 py-3 capitalize opacity-70 whitespace-nowrap">
                         {entry?.user?.role || '-'}
                       </td>
-                      <td className="px-5 py-3 capitalize">{entry?.action || '-'}</td>
-                      <td className="px-5 py-3 capitalize opacity-70">
+                      <td className="px-4 py-3 capitalize whitespace-nowrap">{entry?.action || '-'}</td>
+                      <td className="px-4 py-3 capitalize opacity-70 whitespace-nowrap">
                         {entry?.access_method || '-'}
                       </td>
-                      <td className="px-5 py-3">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <span
                           className={`inline-block rounded-full px-2 py-0.5 text-xs capitalize ${statusClass[entry?.access_status]}`}
                         >
                           {entry?.access_status || '-'}
                         </span>
                       </td>
-                      <td className="px-5 py-3 opacity-70 break-words">{entry?.notes || '-'}</td>
+                      <td className="px-5 py-3 opacity-70 break-words max-w-xs">{entry?.notes || '-'}</td>
                       <td className="px-5 py-3 tabular-nums opacity-70 whitespace-nowrap">
                         {timestamp}
                       </td>
